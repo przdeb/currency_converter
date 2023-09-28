@@ -1,0 +1,42 @@
+[tool.black]
+line-length = 100
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
+[tool.isort]
+profile = "black"
+
+
+[tool.poetry]
+name = "currency-converter"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.scripts]
+convert = "src.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+iso4217 = "^1.11.20220401"
+python-dotenv = "^1.0.0"
+pydantic = "^2.4.0"
+requests = "^2.31.0"
+alembic = "^1.12.0"
+sqlalchemy = "^2.0.21"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+flake8 = "^6.1.0"
+pre-commit = "^3.4.0"
+pylint = "^2.17.6"
+pytest = "^7.4.2"
+pytest-mock = "^3.11.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
