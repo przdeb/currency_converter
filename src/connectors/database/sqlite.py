@@ -12,30 +12,26 @@ LOG = logging.getLogger(__name__)
 
 
 class SqliteDatabaseConnector(BaseConnector):
-    """_summary_
-
-    Args:
-        BaseConnector (_type_): _description_
-    """
+    """Class providing an interface to interact with SQLite database."""
 
     def get_all(self) -> list[dict]:
-        """_summary_
+        """Method to get all records from a converted_price_pln table.
 
         Returns:
-            list[dict]: _description_
+            list[dict]: List of ConvertedPricePLNSchema objects in dictionary representation.
         """
         with Session(engine) as session:
             response = session.query(ConvertedPricePLNSchema).all()
             return [entry.to_dict() for entry in response] if response else []
 
     def get_by_id(self, record_id: int) -> dict:
-        """_summary_
+        """Method to get a record from a converted_price_pln table by id.
 
         Args:
-            record_id (int): _description_
+            record_id (int): ID of a record to be retrieved.
 
         Returns:
-            dict: _description_
+            dict: ConvertedPricePLNSchema in a dictionary representation.
         """
         with Session(engine) as session:
             response = (
@@ -47,13 +43,13 @@ class SqliteDatabaseConnector(BaseConnector):
             return response.to_dict() if response else {}
 
     def save(self, entity: ConvertedPricePLN) -> int:
-        """_summary_
+        """Method to save ConvertedPricePLN in a database.
 
         Args:
-            entity (ConvertedPricePLN): _description_
+            entity (ConvertedPricePLN): Record to be saved.
 
         Returns:
-            int: _description_
+            int: ID of a newly added record.
         """
 
         with Session(engine) as session, session.begin():

@@ -8,29 +8,29 @@ LOG = logging.getLogger(__name__)
 
 
 class LocalSource(Source):
-    """_summary_"""
+    """Class providing an interface to get the currency details using JSON file as a source."""
 
     def __init__(self, local_source_file_name: str = "example_currency_rates.json") -> None:
-        """_summary_
+        """Init method.
 
         Args:
-            local_source_file_name (str, optional): _description_.
+            local_source_file_name (str, optional): Data source file name.
                 Defaults to "example_currency_rates.json".
         """
         self.__source_file = local_source_file_name
         self._data = load_json_file(local_source_file_name)
 
     def get_currency(self, currency: str) -> Currency:
-        """_summary_
+        """Method to get currency details from a local data source.
 
         Args:
-            currency (str): _description_
+            currency (str): Currency code.
 
         Raises:
-            Exception: _description_
+            Exception: When data source has no details for given currency.
 
         Returns:
-            Currency: _description_
+            Currency: Currency details.
         """
         if currency.upper() not in (_currency.upper() for _currency in self._data.keys()):
             msg = (

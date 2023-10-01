@@ -9,14 +9,10 @@ LOG = logging.getLogger(__name__)
 
 
 class JsonFileDatabaseConnector(BaseConnector):
-    """_summary_
-
-    Args:
-        BaseConnector (_type_): _description_
-    """
+    """Class providing an interface to interact with JSON database."""
 
     def __init__(self) -> None:
-        """_summary_"""
+        """Init method. Loads the JSON database contents."""
         self.__source_file = JSON_DATABASE_NAME
         try:
             self._data = load_json_file(JSON_DATABASE_NAME)
@@ -25,24 +21,22 @@ class JsonFileDatabaseConnector(BaseConnector):
             self._data = {}
 
     def get_all(self) -> list[dict]:
-        """_summary_
+        """Method to get all records from a converted_price_pln table.
 
         Returns:
-            list[dict]: _description_
+            list[dict]: List of ConvertedPricePLNSchema objects in dictionary representation.
         """
         return list(self._data.values())
 
     def get_by_id(self, record_id: int) -> dict:
-        """_summary_
+        """Method to get a record from a converted_price_pln table by id.
 
         Args:
-            record_id (int): _description_
-
-        Raises:
-            Exception: _description_
+            record_id (int): ID of a record to be retrieved.
 
         Returns:
-            dict: _description_
+            dict: ConvertedPricePLNSchema in a dictionary representation.
+
         """
         if str(record_id) not in self._data:
             LOG.error(f"Invalid ID, entry with ID '{record_id}' does not exist")
@@ -51,13 +45,13 @@ class JsonFileDatabaseConnector(BaseConnector):
         return self._data[str(record_id)]
 
     def save(self, entity: ConvertedPricePLN) -> int:
-        """_summary_
+        """Method to save ConvertedPricePLN in a database.
 
         Args:
-            entity (ConvertedPricePLN): _description_
+            entity (ConvertedPricePLN): Record to be saved.
 
         Returns:
-            int: _description_
+            int: ID of a newly added record.
         """
         new_entry_id = self.__get_max_id() + 1
         self._data[str(new_entry_id)] = entity.to_model(new_entry_id).model_dump()
@@ -65,10 +59,10 @@ class JsonFileDatabaseConnector(BaseConnector):
         return new_entry_id
 
     def __get_max_id(self) -> int:
-        """_summary_
+        """Method to get the ID of the latest record in a database
 
         Returns:
-            int: _description_
+            int: ID of a latest record.
         """
         try:
             return int(max(self._data.keys(), key=int))

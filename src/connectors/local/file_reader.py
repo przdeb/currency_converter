@@ -7,14 +7,14 @@ LOG = logging.getLogger(__name__)
 
 
 def load_json_file(file_name: str, mode: str = "r") -> dict:
-    """_summary_
+    """Function to read JSON file and return its content.
 
     Args:
-        file_name (str): _description_
-        mode (str, optional): _description_. Defaults to "r".
+        file_name (str): Relative path to a file (from project root)
+        mode (str, optional): Mode to open JSON file. Defaults to "r".
 
     Returns:
-        dict: _description_
+        dict: File content.
     """
     file_name = PROJECT_ROOT.joinpath(file_name)
     try:
@@ -29,15 +29,15 @@ def load_json_file(file_name: str, mode: str = "r") -> dict:
 
 
 def save_json_file(file_name: str, data: dict | list, mode: str = "w"):
-    """_summary_
+    """Function to save data in a JSON file.
 
     Args:
-        file_name (str): _description_
-        data (dict | list): _description_
-        mode (str, optional): _description_. Defaults to "w".
+        file_name (str): Relative path to a file (from project root)
+        data (dict | list): Data to be saved in a file.
+        mode (str, optional): Mode to open JSON file. Defaults to "w".
 
     Raises:
-        Exception: _description_
+        Exception: When data is in invalid format.
     """
     if not isinstance(data, (dict, list)):
         msg = f"Invalid data format, expected 'dict' or 'list', got {type(data)}"

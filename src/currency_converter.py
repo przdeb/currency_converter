@@ -13,14 +13,14 @@ class ConvertedPricePLN:
     currency_rate_fetch_date: str
     price_in_pln: float
 
-    def to_model(self, record_id: int):
-        """_summary_
+    def to_model(self, record_id: int) -> "ConvertedPricePLNModel":
+        """Method converts dataclass object to Pydantic model.
 
         Args:
-            record_id (int): _description_
+            record_id (int): ID of a converted currency; used as an ID in JSON database.
 
         Returns:
-            _type_: _description_
+            ConvertedPricePLNModel: Converted currency model.
         """
         return ConvertedPricePLNModel(
             id=record_id,
@@ -53,13 +53,13 @@ class ConvertedPricePLNModel(BaseModel):
 
 class PriceCurrencyConverterToPLN:
     def convert_to_pln(self, *, price: float) -> ConvertedPricePLN:
-        """_summary_
+        """Method that converts currency to PLN.
 
         Args:
-            price (float): _description_
+            price (float): Amount of money to be converted.
 
         Returns:
-            ConvertedPricePLN: _description_
+            ConvertedPricePLN: Currency converted to PLN.
         """
         return ConvertedPricePLN(
             price_in_source_currency=price,

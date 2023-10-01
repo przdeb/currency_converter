@@ -10,33 +10,30 @@ LOG = logging.getLogger(__name__)
 
 
 class NbpSource(Source):
-    """_summary_
-
-    Args:
-        Source (_type_): _description_
-    """
+    """Class providing an interface to get the currency details using NBP API as a source."""
 
     def __init__(self, base_url: str = NBP_BASE_URL, endpoint: str = NBP_ENDPOINT) -> None:
-        """_summary_
+        """Init method.
 
         Args:
-            base_url (str, optional): _description_. Defaults to NBP_BASE_URL.
-            endpoint (str, optional): _description_. Defaults to NBP_ENDPOINT.
+            base_url (str, optional): NBP API base url. Defaults to NBP_BASE_URL.
+            endpoint (str, optional): NBP API endpoint. Defaults to NBP_ENDPOINT.
         """
         self.__url = base_url
         self.__endpoint = endpoint
 
     def get_currency(self, currency: str) -> Currency:
-        """_summary_
+        """Method to send a request to NBP API and get currency details.
 
         Args:
-            currency (str): _description_
+            currency (str): Currency code.
 
         Raises:
-            Exception: _description_
+            Exception: When API response is invalid.
+            HTTPError: When API does not have data for given currency.
 
         Returns:
-            Currency: _description_
+            Currency: Currency details.
         """
         url = f"{self.__url}/{self.__endpoint}/{currency}"
         try:

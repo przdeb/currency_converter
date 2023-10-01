@@ -4,7 +4,7 @@ from src.connectors.database.session import Base
 
 
 class ConvertedPricePLNSchema(Base):
-    """_summary_"""
+    """Database schema for converted currency."""
 
     __tablename__ = "converted_price_pln"
 
@@ -14,11 +14,11 @@ class ConvertedPricePLNSchema(Base):
     price_in_pln = Column(Float(precision=2))
     date = Column(String)
 
-    def to_dict(self):
-        """_summary_
+    def to_dict(self) -> dict:
+        """Method to dump SQLAlchemy object to a dictionary.
 
         Returns:
-            _type_: _description_
+            dict: ConvertedPricePLNSchema object as a dictionary.
         """
         return {
             "id": self.id,

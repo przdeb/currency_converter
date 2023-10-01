@@ -21,10 +21,21 @@ load_dotenv(override=True)
 
 
 def parse_arguments() -> argparse.Namespace:
-    """_summary_
+    """Function to parse input arguments.
+    Required arguments:
+    -a, --amount (float) - amount of money to convert
+    -c, --currency (str) - ISO4217 currency code.
+    Optional arguments:
+    -s, --source - Data source for convertion, either a local json file or NBP API.
+        Defaults to NBP API
+    -f, --file - File name to use as a data source if local is selected.
+        Defaults to example_currency_rates.json
+    -e, --env - Environment, can be either dev or prod. Defaults to prod.
+    --debug - Flag to select whether to run in a debug mode.
+
 
     Returns:
-        argparse.Namespace: _description_
+        argparse.Namespace: Parsed arguments.
     """
     parser = argparse.ArgumentParser(
         prog="Currency Converter", description="Converts given currencies to PLN"
@@ -72,16 +83,17 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def get_currency(args: argparse.Namespace) -> Currency:
-    """_summary_
+    """Function to get the details of selected source succenry. Gets currency details
+    based on selected source (and/or file).
 
     Args:
-        args (argparse.Namespace): _description_
+        args (argparse.Namespace): Arguments provided to a script.
 
     Raises:
-        Exception: _description_
+        Exception: When selected source is not yet supported.
 
     Returns:
-        Currency: _description_
+        Currency: Source currency details.
     """
     match args.source:
         case "LOCAL":
@@ -94,7 +106,7 @@ def get_currency(args: argparse.Namespace) -> Currency:
 
 
 def main():  # pylint: disable=inconsistent-return-statements
-    """_summary_"""
+    """Main function. Converts given currency to PLN."""
     try:
         args = parse_arguments()
         LOG.info(
